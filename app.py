@@ -44,17 +44,17 @@ Questions:{input}
 
 def vector_embedding():
 
-    if "vectors" not in st.session_state:
+#     if "vectors" not in st.session_state:
 
-        st.session_state.embeddings=GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
-        st.session_state.loader=PyPDFDirectoryLoader("") ## Data Ingestion
-        st.session_state.docs=st.session_state.loader.load() ## Document Loading
-        st.session_state.text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,chunk_overlap=200) ## Chunk Creation
-        st.session_state.final_documents=st.session_state.text_splitter.split_documents(st.session_state.docs[:20]) #splitting
-        st.session_state.vectors=FAISS.from_documents(st.session_state.final_documents,st.session_state.embeddings) #vector google embeddings
+#         st.session_state.embeddings=GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
+#         st.session_state.loader=PyPDFDirectoryLoader("") ## Data Ingestion
+#         st.session_state.docs=st.session_state.loader.load() ## Document Loading
+#         st.session_state.text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,chunk_overlap=200) ## Chunk Creation
+#         st.session_state.final_documents=st.session_state.text_splitter.split_documents(st.session_state.docs[:20]) #splitting
+#         st.session_state.vectors=FAISS.from_documents(st.session_state.final_documents,st.session_state.embeddings) #vector google embeddings
 
-    #     index_path = "faiss_index"
-    # st.session_state.vectors.save_local("faiss_index")
+    index_path = "faiss_index"
+    st.session_state.vectors = FAISS.load_local(index_path, st.session_state.embeddings, allow_dangerous_deserialization=True)
         
 prompt1=st.text_input("Enter Your Question...")
 
